@@ -1,0 +1,17 @@
+#site-header {
+	background-color: #E4F1FE;
+	width: 100%;
+}
+
+#site-header-container {
+	margin-right: auto;
+	margin-left: auto;
+	display: block;
+	width: 80%;
+}
+
+#nav {
+	font-size: 24px;
+	font-family: sans-serif;
+	padding: 5px 20px;
+}
