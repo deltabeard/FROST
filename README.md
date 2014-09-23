@@ -16,5 +16,6 @@ Prerequisites
 =============
 
 Change post_max_size (php.ini) to the maximum file size you want the user to upload on to the server.
-eg.
-	post_max_size=8M
+```
+post_max_size=50M
+```
