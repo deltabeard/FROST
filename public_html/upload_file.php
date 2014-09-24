@@ -21,7 +21,9 @@ if ((($_FILES["userfile"]["type"] == "video/webm")
 		$title = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9 ]/', ' ', urldecode(html_entity_decode(strip_tags($_POST["title"]))))));
 
 		$video_upload_date = date("Y-m-d H:i:s");
-		$video_serial = hash('sha256', $title . $upload_date);
+		$video_serial = hash('sha256', $title . $video_upload_date);
+		// Strongly recommended to replace the string used as salt here
+		$trip = crypt($_POST["trip_pass"], 'ThIsISs@lt.UFR EW(YY!d<AU&|vueG7NP?J*Ns*Ug+JEClm)D!f>KLOzQb?0;?Z$@]h<7{OQ|');
 
 		// Display information
 		echo "File name on upload: " . $_FILES["userfile"]["name"] . "<br>";
@@ -32,6 +34,7 @@ if ((($_FILES["userfile"]["type"] == "video/webm")
 		echo "Temp file: " . $_FILES["userfile"]["tmp_name"] . "<br>";
 		echo "Time video completed upload: " . $video_upload_date . "<br>";
 		echo "Unique video serial: " . $video_serial . "<br>";
+		echo "Trip code of uploader: " . $trip . "<br>";
 		
 		if (file_exists("upload/$filename")) {
 			echo $filename . " already exists. ";

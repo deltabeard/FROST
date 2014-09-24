@@ -23,6 +23,7 @@
 		<!-- Video information -->
 		Title: <input type="text" name="title"><br>
 		Description:  <textarea maxlength="500" name="description">Enter a description of the video here...</textarea><br>
+		Trip-code password: <input type="text" name="trip_pass"><br>
 		<!-- Name of input element determines name in $_FILES array -->
 		Send this file: <input name="userfile" type="file" />
 		<input type="submit" value="Send File" />
