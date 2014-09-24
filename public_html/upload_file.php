@@ -20,6 +20,9 @@ if ((($_FILES["userfile"]["type"] == "video/webm")
 		$description = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9. ]/', ' ', urldecode(html_entity_decode(strip_tags($_POST["description"]))))));
 		$title = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9 ]/', ' ', urldecode(html_entity_decode(strip_tags($_POST["title"]))))));
 
+		$video_upload_date = date("Y-m-d H:i:s");
+		$video_serial = hash('sha256', $title . $upload_date);
+
 		// Display information
 		echo "File name on upload: " . $_FILES["userfile"]["name"] . "<br>";
 		echo "Title: " . $title . "<br>";
@@ -27,6 +30,8 @@ if ((($_FILES["userfile"]["type"] == "video/webm")
 		echo "Type: " . $_FILES["userfile"]["type"] . "<br>";
 		echo "Size: " . ($_FILES["userfile"]["size"] / 1024) . " kB<br>";
 		echo "Temp file: " . $_FILES["userfile"]["tmp_name"] . "<br>";
+		echo "Time video completed upload: " . $video_upload_date . "<br>";
+		echo "Unique video serial: " . $video_serial . "<br>";
 		
 		if (file_exists("upload/$filename")) {
 			echo $filename . " already exists. ";
