@@ -20,6 +20,9 @@
 	<form enctype="multipart/form-data" action="upload_file.php" method="POST">
 		<!-- MAX_FILE_SIZE must precede the file input field -->
 		<input type="hidden" name="MAX_FILE_SIZE" value="50000000" />
+		<!-- Video information -->
+		Title: <input type="text" name="title"><br>
+		Description:  <textarea maxlength="500" name="description">Enter a description of the video here...</textarea><br>
 		<!-- Name of input element determines name in $_FILES array -->
 		Send this file: <input name="userfile" type="file" />
 		<input type="submit" value="Send File" />

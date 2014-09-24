@@ -8,26 +8,25 @@ if ((($_FILES["userfile"]["type"] == "video/webm")
 		// Return an error if file does not meet requirements
 		echo "Return Code: " . $_FILES["userfile"]["error"] . "<br>";
 	} else {
+
+		// Remove HTML and special characters from filename
+		// Strip HTML Tags
+		// Clean up things like &amp;
+		// Strip out any url-encoded stuff
+		// Replace non-AlNum characters with space
+		// Replace Multiple spaces with single space
+		// Trim the string of leading/trailing space
+		$filename = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9. ]/', ' ', urldecode(html_entity_decode(strip_tags($_FILES["userfile"]["name"]))))));
+		$description = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9. ]/', ' ', urldecode(html_entity_decode(strip_tags($_POST["description"]))))));
+		$title = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9 ]/', ' ', urldecode(html_entity_decode(strip_tags($_POST["title"]))))));
+
 		// Display information
 		echo "File name on upload: " . $_FILES["userfile"]["name"] . "<br>";
+		echo "Title: " . $title . "<br>";
+		echo "Description: " . $description . "<br>";
 		echo "Type: " . $_FILES["userfile"]["type"] . "<br>";
 		echo "Size: " . ($_FILES["userfile"]["size"] / 1024) . " kB<br>";
 		echo "Temp file: " . $_FILES["userfile"]["tmp_name"] . "<br>";
-
-		// Remove HTML and special characters from filename
-		$filename = $_FILES["userfile"]["name"];
-		// Strip HTML Tags
-		$filename = strip_tags($filename);
-		// Clean up things like &amp;
-		$filename = html_entity_decode($filename);
-		// Strip out any url-encoded stuff
-		$filename = urldecode($filename);
-		// Replace non-AlNum characters with space
-		$filename = preg_replace('/[^A-Za-z0-9.]/', ' ', $filename);
-		// Replace Multiple spaces with single space
-		$filename = preg_replace('/ +/', ' ', $filename);
-		// Trim the string of leading/trailing space
-		$filename = trim($filename);
 		
 		if (file_exists("upload/$filename")) {
 			echo $filename . " already exists. ";
