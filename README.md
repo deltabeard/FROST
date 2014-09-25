@@ -15,7 +15,13 @@ If you would like to contribute please fork this repository, make your changes, 
 Prerequisites
 =============
 
-Change post_max_size (php.ini) to the maximum file size you want the user to upload on to the server.
+1. Change post_max_size (php.ini) to the maximum file size you want the user to upload on to the server.
 ```
 post_max_size=50M
+```
+
+2. Change the salt used in public_html/upload_file.php before uploading to a server.
+```
+		// Strongly recommended to replace the string used as salt here
+		$trip = crypt($_POST["trip_pass"], 'Change This String!');
 ```
