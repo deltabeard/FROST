@@ -42,8 +42,35 @@ if ((($_FILES["userfile"]["type"] == "video/webm")
 		echo "Trip code of uploader: " . $trip . "<br>";
 		
 		if (isset($_POST["uploadtopomf"])) {
+
+			echo "<pre>";
+			echo "Loading ...";
+
+			function curl_progress_callback($resource, $download_size, $downloaded, $upload_size, $uploaded)
+			{
+				if($upload_size > 0) {
+					echo $uploaded / $upload_size  * 100 . "%";
+					echo " Average upload speed: " . curl_getinfo($resource, CURLINFO_SPEED_UPLOAD) . "B/s<br>";
+				}
+				ob_flush();
+				flush();
+			}
+
+			// Increase max execution time to a day
+			set_time_limit(86400);
+
+			ob_flush();
+			flush();
+
 			// initialise the curl request
 			$request = curl_init('http://pomf.se/upload.php');
+
+			// Set options to get progress bar
+			curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($request, CURLOPT_PROGRESSFUNCTION, 'curl_progress_callback');
+			curl_setopt($request, CURLOPT_NOPROGRESS, false); // needed to make progress function work
+			curl_setopt($request, CURLOPT_HEADER, 0);
+			curl_setopt($request, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
 
 			// send a file
 			curl_setopt($request, CURLOPT_POST, true);
@@ -58,11 +85,16 @@ if ((($_FILES["userfile"]["type"] == "video/webm")
 				));
 
 			// output the response
-			curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+			// curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
 			echo curl_exec($request);
 
 			// close the session
 			curl_close($request);
+
+			echo "Done";
+			ob_flush();
+			flush();
+
 		} else {
 			if (file_exists("upload/$filename")) {
 				echo $filename . " already exists. ";
