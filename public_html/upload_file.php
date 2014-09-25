@@ -41,16 +41,40 @@ if ((($_FILES["userfile"]["type"] == "video/webm")
 		echo "Unique video serial: " . $video_serial . "<br>";
 		echo "Trip code of uploader: " . $trip . "<br>";
 		
-		if (file_exists("upload/$filename")) {
-			echo $filename . " already exists. ";
+		if (isset($_POST["uploadtopomf"])) {
+			// initialise the curl request
+			$request = curl_init('http://pomf.se/upload.php');
+
+			// send a file
+			curl_setopt($request, CURLOPT_POST, true);
+			curl_setopt(
+				$request,
+				CURLOPT_POSTFIELDS,
+				array(
+					'files[]' =>
+					'@' 		. $_FILES["userfile"]["tmp_name"]
+					. ';filename='	. $_FILES["userfile"]["name"]
+					. ';type='	. $_FILES["userfile"]["type"]
+				));
+
+			// output the response
+			curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+			echo curl_exec($request);
+
+			// close the session
+			curl_close($request);
 		} else {
-			// If requirements of the file are met, move the file from temp to permanent location
-			move_uploaded_file($_FILES["userfile"]["tmp_name"],
-			"upload/$filename");
-			echo "Stored in: " . "upload/$filename";
+			if (file_exists("upload/$filename")) {
+				echo $filename . " already exists. ";
+			} else {
+				// If requirements of the file are met, move the file from temp to permanent location
+				move_uploaded_file($_FILES["userfile"]["tmp_name"],
+				"upload/$filename");
+				echo "Stored in: " . "upload/$filename";
+			}
+			// Display video
+			echo "<br><video controls><source src='upload/" . $filename . "' type='" . $_FILES["userfile"]["type"] . "'>Your browser does not support the video tag.</video>";
 		}
-		// Display video
-		echo "<br><video controls><source src='upload/" . $filename . "' type='" . $_FILES["userfile"]["type"] . "'>Your browser does not support the video tag.</video>";
 	}
 } else {
 	echo "Invalid file - Exceeds file size limits or bad file type";
