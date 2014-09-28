@@ -7,6 +7,16 @@ body {
 	font-family: sans-serif;
 }
 
+#logo {
+	text-decoration: none;
+	font-family: 'Comfortaa';
+	font-weight: bold;
+	font-style: normal;
+	color: #4183D7;
+	text-shadow: 2px 2px 2px rgba(150, 150, 150, 1);
+	font-size: 30px;
+}
+
 #site-header {
 	background-color: #E4F1FE;
 	height: 40px;
@@ -42,6 +52,7 @@ body {
 
 #uploadBtn {
 	float: right;
+	margin-top: 7px;
 }
 
 a.tab:link, a.tab:visited {
