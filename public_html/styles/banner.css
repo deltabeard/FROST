@@ -7,6 +7,13 @@ body {
 	font-family: sans-serif;
 }
 
+@font-face {
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: bold;
+  src: url('fonts/ComfortaaBold.ttf') format('truetype');
+}
+
 #logo {
 	text-decoration: none;
 	font-family: 'Comfortaa';
