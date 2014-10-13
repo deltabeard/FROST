@@ -1,0 +1,88 @@
+html, body {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: sans-serif;
+}
+
+@font-face {
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: bold;
+  src: url('fonts/ComfortaaBold.ttf') format('truetype');
+}
+
+#logo {
+	text-decoration: none;
+	font-family: 'Comfortaa';
+	font-weight: bold;
+	font-style: normal;
+	color: #4183D7;
+	text-shadow: 2px 2px 2px rgba(150, 150, 150, 1);
+	font-size: 30px;
+}
+
+#site-header {
+	background-color: #E4F1FE;
+	height: 40px;
+	border-bottom: 1px solid #D2D7D3;
+}
+
+#site-header-container {
+	margin-right: auto;
+	margin-left: auto;
+	display: block;
+	width: 80%;
+}
+
+#nav {
+	display: inline;
+}
+
+#site-header-container h1 {
+	font-size: 24px;
+	padding-top: 20px;
+	display: inline;
+}
+
+#nav ul {
+	list-style-type: none;
+	display: inline;
+}
+
+#nav li {
+	display: inline;
+	padding-right: 20px;
+}
+
+#uploadBtn {
+	float: right;
+	margin-top: 7px;
+}
+
+a.tab:link, a.tab:visited {
+	text-decoration: none;
+	color: #6C7A89;
+}
+
+a.tab:hover, a.tab:active {
+	color: #19B5FE;
+}
+
+a.button:link, a.button:visited {
+	text-decoration: none;
+	padding: 5px;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	border: 1px solid #95A5A6;
+	border-radius: 3px;
+	background-color: #A7D2FC;
+	color: #4C555E;
+	font-size: 12px;
+}
+
+a.button:hover, a.button:active {
+	background-color: #85C2FF;
+}
