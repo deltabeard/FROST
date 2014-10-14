@@ -1,6 +1,6 @@
 <?php
-if ((($_FILES["userfile"]["type"] == "video/webm")
-|| ($_FILES["userfile"]["type"] == "video/mp4")
+if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since the type can be faked */
+|| ($_FILES["userfile"]["type"] == "video/mp4")     /* We should try using finfo_open */
 || ($_FILES["userfile"]["type"] == "video/ogg")
 && ($_FILES["userfile"]["size"] < 50000000)))
 {
