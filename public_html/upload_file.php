@@ -9,16 +9,12 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 		echo "Return Code: " . $_FILES["userfile"]["error"] . "<br>";
 	} else {
 
-		// Remove HTML and special characters from filename
 		// Strip HTML Tags
-		// Clean up things like &amp;
-		// Strip out any url-encoded stuff
-		// Replace non-AlNum characters with space
-		// Replace Multiple spaces with single space
+        // Convert all applicable characters to HTML entities, including " and '
 		// Trim the string of leading/trailing space
-		$filename = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9. ]/', ' ', urldecode(html_entity_decode(strip_tags($_FILES["userfile"]["name"]))))));
-		$description = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9. ]/', ' ', urldecode(html_entity_decode(strip_tags($_POST["description"]))))));
-		$title = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9 ]/', ' ', urldecode(html_entity_decode(strip_tags($_POST["title"]))))));
+		$filename = trim(htmlentities(strip_tags($_FILES["userfile"]["name"]), ENT_QUOTES));
+		$description = trim(htmlentities(strip_tags($_POST["description"]), ENT_QUOTES));
+		$title = trim(htmlentities(strip_tags($_POST["title"]), ENT_QUOTES));
 
 		$video_upload_date = date("Y-m-d H:i:s");
 		$video_serial = hash('sha256', $title . $video_upload_date);
