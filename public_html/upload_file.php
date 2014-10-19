@@ -1,4 +1,4 @@
-<?php
+<?php // ini_set('display_errors',1); error_reporting(E_ALL); // Display errors
 if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since the type can be faked */
 || ($_FILES["userfile"]["type"] == "video/mp4")     /* We should try using finfo_open */
 || ($_FILES["userfile"]["type"] == "video/ogg")
@@ -7,23 +7,25 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 	if ($_FILES["userfile"]["error"] > 0) {
 		// Return an error if file does not meet requirements
 		echo "Return Code: " . $_FILES["userfile"]["error"] . "<br>";
-	} else {
-        require_once 'dbconnect.php';
-        $dbh = dbconnect();
+	}
+    else {
+        $fileUploaded = false;
 
-		// Strip HTML Tags
+        // Strip HTML Tags
         // Convert all applicable characters to HTML entities, including " and '
 		// Trim the string of leading/trailing space
 		$filename = trim(htmlentities(strip_tags($_FILES["userfile"]["name"]), ENT_QUOTES));
+        $title = trim(htmlentities(strip_tags($_POST["title"]), ENT_QUOTES));
 		$description = trim(htmlentities(strip_tags($_POST["description"]), ENT_QUOTES));
-		$title = trim(htmlentities(strip_tags($_POST["title"]), ENT_QUOTES));
+        $filetype = substr($_FILES["userfile"]["type"], 6);
 
 		$video_upload_date = date("Y-m-d H:i:s");
 		$video_serial = hash('sha256', $title . $video_upload_date);
 
 		if (empty($_POST["trip_pass"])) {
 			$trip = "Anonymous";
-		} else {
+		}
+        else {
 			// Strongly recommended to replace the string used as salt here
 			$trip = crypt($_POST["trip_pass"], 'ThIsISs@lt.UFR EW(YY!d<AU&|vueG7NP?J*Ns*Ug+JEClm)D!f>KLOzQb?0;?Z$@]h<7{OQ|');
 		}
@@ -32,7 +34,7 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 		echo "File name on upload: " . $_FILES["userfile"]["name"] . "<br>";
 		echo "Title: " . $title . "<br>";
 		echo "Description: " . $description . "<br>";
-		echo "Type: " . $_FILES["userfile"]["type"] . "<br>";
+		echo "Type: " . $filetype . "<br>";
 		echo "Size: " . ($_FILES["userfile"]["size"] / 1024) . " kB<br>";
 		echo "Temp file: " . $_FILES["userfile"]["tmp_name"] . "<br>";
 		echo "Time video completed upload: " . $video_upload_date . "<br>";
@@ -90,23 +92,37 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 			curl_close($request);
 
 			echo "Done";
+            $fileUploaded = true;
 			ob_flush();
 			flush();
 
-		} else {
+		}
+        else {
 			if (file_exists("upload/$filename")) {
 				echo $filename . " already exists. ";
-			} else {
+			}
+            else {
 				// If requirements of the file are met, move the file from temp to permanent location
 				move_uploaded_file($_FILES["userfile"]["tmp_name"],
 				"upload/$filename");
 				echo "Stored in: " . "upload/$filename";
+                $fileUploaded = true;
 			}
 			// Display video
 			echo "<br><video controls><source src='upload/" . $filename . "' type='" . $_FILES["userfile"]["type"] . "'>Your browser does not support the video tag.</video>";
 		}
+        if($fileUploaded) {
+            require_once 'dbconnect.php';
+            $dbh = dbconnect();
+            $sql = 'INSERT INTO videos
+                    (title, description, filetype, url, host_code, uploader_ip, uploader_name, tripcode, upload_date
+                    VALUES
+                    ';
+
+        }
 	}
-} else {
+}
+else {
 	echo "Invalid file - Exceeds file size limits or bad file type";
 }
 ?> 
