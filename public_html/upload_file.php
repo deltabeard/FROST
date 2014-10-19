@@ -8,6 +8,8 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 		// Return an error if file does not meet requirements
 		echo "Return Code: " . $_FILES["userfile"]["error"] . "<br>";
 	} else {
+        require_once 'dbconnect.php';
+        $dbh = dbconnect();
 
 		// Strip HTML Tags
         // Convert all applicable characters to HTML entities, including " and '
