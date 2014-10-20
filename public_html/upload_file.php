@@ -46,7 +46,7 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 		echo "Temp file: " . $_FILES["userfile"]["tmp_name"] . "<br>";
 		echo "Time video completed upload: " . $video_upload_date . "<br>";
 		echo "Trip code of uploader: " . $tripcode . "<br>";
-		
+
 		if (isset($_POST["uploadtopomf"])) {
 
 			echo "<pre>";
@@ -102,7 +102,12 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 			curl_close($request);
 
 			echo "Done<br>";
-            $addToDb = true;
+
+            // Check if video was correctly uploaded to pomf
+            if($jsonArray['success']){
+                $addToDb = true;
+                $host_code = 2;
+            }
 			ob_flush();
 			flush();
 
@@ -119,10 +124,12 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 			}
             $addToDb = true;
             $url = "upload/$filename";
+            $host_code = 1;
 			// Display video
 			echo "<br><video controls><source src='upload/" . $filename . "' type='" . $_FILES["userfile"]["type"] . "'>Your browser does not support the video tag.</video>";
 		}
         if($addToDb) {
+            // Connect to database and insert new video
             require_once 'dbconnect.php';
             $dbh = dbconnect();
             $sql = 'INSERT INTO videos
