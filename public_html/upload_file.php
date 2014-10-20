@@ -78,6 +78,7 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 			// Set options to get progress bar
 			curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($request, CURLOPT_PROGRESSFUNCTION, 'curl_progress_callback');
+//            curl_setopt($ch, CURLOPT_BUFFERSIZE, 128);    // Potentially altering the upload speed
 			curl_setopt($request, CURLOPT_NOPROGRESS, false); // needed to make progress function work
 			curl_setopt($request, CURLOPT_HEADER, 0);
 			curl_setopt($request, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
