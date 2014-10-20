@@ -9,37 +9,43 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 		echo "Return Code: " . $_FILES["userfile"]["error"] . "<br>";
 	}
     else {
-        $fileUploaded = false;
+        $addToDb = false;
 
-        // Strip HTML Tags
-        // Convert all applicable characters to HTML entities, including " and '
-		// Trim the string of leading/trailing space
-		$filename = trim(htmlentities(strip_tags($_FILES["userfile"]["name"]), ENT_QUOTES));
+        // Create/initialise fields for insertion into table
         $title = trim(htmlentities(strip_tags($_POST["title"]), ENT_QUOTES));
-		$description = trim(htmlentities(strip_tags($_POST["description"]), ENT_QUOTES));
+        $description = trim(htmlentities(strip_tags($_POST["description"]), ENT_QUOTES));
         $filetype = substr($_FILES["userfile"]["type"], 6);
+        $url;
+        $host_code;
+        $uploader_ip = $_SERVER["REMOTE_ADDR"];
 
-		$video_upload_date = date("Y-m-d H:i:s");
-		$video_serial = hash('sha256', $title . $video_upload_date);
+        // Seperate uploader_name and tripcode and legalise the characters.
+        $uploader_info = explode("#", $_POST["uploader_name"]);
+        $uploader_info[0] == "" ? $uploader_name = null : $uploader_name = $uploader_info[0];
+        $uploader_name = trim(htmlentities(strip_tags($uploader_name), ENT_QUOTES));
+        $tripcode; // = generate tripcode
 
-		if (empty($_POST["trip_pass"])) {
-			$trip = "Anonymous";
-		}
-        else {
-			// Strongly recommended to replace the string used as salt here
-			$trip = crypt($_POST["trip_pass"], 'ThIsISs@lt.UFR EW(YY!d<AU&|vueG7NP?J*Ns*Ug+JEClm)D!f>KLOzQb?0;?Z$@]h<7{OQ|');
-		}
+        $video_upload_date = date("Y-m-d H:i:s");
+		$filename = trim(htmlentities(strip_tags($_FILES["userfile"]["name"]), ENT_QUOTES));
+
+//		if (!array_key_exists(1, $uploader_info)) {
+//			$tripcode = null;
+//		}
+//        else {
+//			// Strongly recommended to replace the string used as salt here
+//			$tripcode = crypt($_POST["trip_pass"], 'ThIsISs@lt.UFR EW(YY!d<AU&|vueG7NP?J*Ns*Ug+JEClm)D!f>KLOzQb?0;?Z$@]h<7{OQ|');
+//		}
 
 		// Display information
-		echo "File name on upload: " . $_FILES["userfile"]["name"] . "<br>";
+		echo "File name on upload: " . $filename . "<br>";
 		echo "Title: " . $title . "<br>";
 		echo "Description: " . $description . "<br>";
 		echo "Type: " . $filetype . "<br>";
 		echo "Size: " . ($_FILES["userfile"]["size"] / 1024) . " kB<br>";
+        echo "Uploader name: " . $uploader_name . "<br>";
 		echo "Temp file: " . $_FILES["userfile"]["tmp_name"] . "<br>";
 		echo "Time video completed upload: " . $video_upload_date . "<br>";
-		echo "Unique video serial: " . $video_serial . "<br>";
-		echo "Trip code of uploader: " . $trip . "<br>";
+		echo "Trip code of uploader: " . $tripcode . "<br>";
 		
 		if (isset($_POST["uploadtopomf"])) {
 
@@ -88,15 +94,15 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
     					. ';type='	. $_FILES["userfile"]["type"]
 				));
 
-			// output the response
-			// curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
-			echo curl_exec($request);
+            // Execute the upload and decode the url it was stored at
+            $jsonArray = json_decode(curl_exec($request), true);
+            $url = $jsonArray['files'][0]['url'];
 
 			// close the session
 			curl_close($request);
 
-			echo "Done";
-            $fileUploaded = true;
+			echo "Done<br>";
+            $addToDb = true;
 			ob_flush();
 			flush();
 
@@ -110,19 +116,20 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 				move_uploaded_file($_FILES["userfile"]["tmp_name"],
 				"upload/$filename");
 				echo "Stored in: " . "upload/$filename";
-                $fileUploaded = true;
 			}
+            $addToDb = true;
+            $url = "upload/$filename";
 			// Display video
 			echo "<br><video controls><source src='upload/" . $filename . "' type='" . $_FILES["userfile"]["type"] . "'>Your browser does not support the video tag.</video>";
 		}
-        if($fileUploaded) {
+        if($addToDb) {
             require_once 'dbconnect.php';
             $dbh = dbconnect();
             $sql = 'INSERT INTO videos
                     (title, description, filetype, url, host_code, uploader_ip, uploader_name, tripcode, upload_date
                     VALUES
                     ';
-
+            echo "Located at: " . $url;
         }
 	}
 }
