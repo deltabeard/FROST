@@ -24,8 +24,8 @@
                     <td><textarea maxlength="500" name="description" placeholder="Enter a description of the video here..."></textarea></td>
                 </tr>
                 <tr>
-                    <td><label for="trip_pass">Trip-code password: </label></td>
-                    <td><input type="text" name="trip_pass"></td>
+                    <td><label for="uploader_name">Name: </label></td>
+                    <td><input type="text" name="uploader_name"></td>
                 </tr>
                 <tr>
                     <td><label for="uploadtopomf">Upload to pomf.se?</label></td>
