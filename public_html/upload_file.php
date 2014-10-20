@@ -65,6 +65,10 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 			// initialise the curl request
 			$request = curl_init('http://pomf.se/upload.php');
 
+            // Used for compatibility with PHP 5.6+
+            // This allows support for uploading files in CURLOPT_POSTFIELDS using the @ prefix
+            curl_setopt($request, CURLOPT_SAFE_UPLOAD, false);  // This will be changed to curlfile at a later date
+
 			// Set options to get progress bar
 			curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($request, CURLOPT_PROGRESSFUNCTION, 'curl_progress_callback');
@@ -79,9 +83,9 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 				CURLOPT_POSTFIELDS,
 				array(
 					'files[]' =>
-					'@' 		. $_FILES["userfile"]["tmp_name"]
-					. ';filename='	. $_FILES["userfile"]["name"]
-					. ';type='	. $_FILES["userfile"]["type"]
+                        '@' 		. $_FILES["userfile"]["tmp_name"]
+    					. ';filename='	. $_FILES["userfile"]["name"]
+    					. ';type='	. $_FILES["userfile"]["type"]
 				));
 
 			// output the response
