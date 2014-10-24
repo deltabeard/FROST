@@ -1,0 +1,24 @@
+.main {
+    /* Set width of main content */
+    width: 80%;
+    margin: 0 auto;
+
+    /* Set main font */
+    font-family: sans-serif;
+}
+
+a.button:link, a.button:visited, input[type=submit] {
+    text-decoration: none;
+    padding: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border: 1px solid #95A5A6;
+    border-radius: 3px;
+    background-color: #A7D2FC;
+    color: #4C555E;
+    font-size: 12px;
+}
+
+a.button:hover, a.button:active, input[type=submit]:hover, input[type=submit]:active {
+    background-color: #85C2FF;
+}

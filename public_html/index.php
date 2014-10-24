@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>FROST</title>
-	<link rel="stylesheet" type="text/css" href="styles/index.css">
+	<link rel="stylesheet" type="text/css" href="styles/master.css">
 </head>
 
 <body>
