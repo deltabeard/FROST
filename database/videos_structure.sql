@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.10
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 18, 2014 at 04:36 PM
+-- Generation Time: Nov 07, 2014 at 10:50 AM
 -- Server version: 10.0.14-MariaDB-log
--- PHP Version: 5.6.1
+-- PHP Version: 5.6.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `videos` (
   `uploader_name` varchar(30) DEFAULT NULL,
   `tripcode` varchar(12) DEFAULT NULL,
   `upload_date` datetime NOT NULL,
-  `video_status` int(11) NOT NULL,
+  `video_status` int(11) NOT NULL DEFAULT '1',
   `removal_code` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
