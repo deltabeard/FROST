@@ -10,6 +10,7 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 	}
     else {
         $addToDb = false;
+		require_once 'libs/avipedia_tripcode.php';
 
         // Create/initialise fields for insertion into table
         $title = trim(htmlentities(strip_tags($_POST["title"]), ENT_QUOTES));
@@ -23,18 +24,10 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
         $uploader_info = explode("#", $_POST["uploader_name"]);
         $uploader_info[0] == "" ? $uploader_name = null : $uploader_name = $uploader_info[0];
         $uploader_name = trim(htmlentities(strip_tags($uploader_name), ENT_QUOTES));
-        $tripcode; // = generate tripcode
+        $tripcode = mktripcode($uploader_info[1]);
 
         $video_upload_date = date("Y-m-d H:i:s");
 		$filename = trim(htmlentities(strip_tags($_FILES["userfile"]["name"]), ENT_QUOTES));
-
-//		if (!array_key_exists(1, $uploader_info)) {
-//			$tripcode = null;
-//		}
-//        else {
-//			// Strongly recommended to replace the string used as salt here
-//			$tripcode = crypt($_POST["trip_pass"], 'ThIsISs@lt.UFR EW(YY!d<AU&|vueG7NP?J*Ns*Ug+JEClm)D!f>KLOzQb?0;?Z$@]h<7{OQ|');
-//		}
 
 		// Display information
 		echo "File name on upload: " . $filename . "<br>";
