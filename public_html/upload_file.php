@@ -152,4 +152,3 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 else {
 	echo "Invalid file - Exceeds file size limits or bad file type";
 }
-?> 

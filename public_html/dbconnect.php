@@ -9,4 +9,3 @@
             die('Cannot connect to database: ' . $e -> getMessage());
         }
     }
-?>
