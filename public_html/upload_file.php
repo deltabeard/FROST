@@ -1,4 +1,4 @@
-<?php ini_set('display_errors',1); error_reporting(E_ALL); // Display errors
+<?php //ini_set('display_errors',1); error_reporting(E_ALL); // Display errors
 if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since the type can be faked */
 || ($_FILES["userfile"]["type"] == "video/mp4")     /* We should try using finfo_open */
 || ($_FILES["userfile"]["type"] == "video/ogg")
