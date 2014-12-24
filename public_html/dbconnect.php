@@ -9,3 +9,8 @@
             die('Cannot connect to database: ' . $e -> getMessage());
         }
     }
+	function getwd() {
+		// Return the location of this directory
+		return (str_replace($_SERVER["DOCUMENT_ROOT"],'', str_replace('\\','/',__DIR__ ) ));
+	}
+?>

@@ -24,6 +24,9 @@
 	);
 	
 	$results = $query->execute();
+	
+	// Get working directory
+	$cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/")
   ?>
   
   <table>
@@ -49,9 +52,9 @@
 		<td><?php echo ($row['uploader_name'] . "!" . $row['tripcode']); ?></td>
 		<td><?php
 			if ( $row['host_code'] == 1 ) {
-				echo ("Hosted locally: " . $row['url']);
+				echo ("<a href='" . $cwd . $row['url'] . "'>Hosted locally</a>");
 			} elseif ( $row['host_code'] == 2 ) {
-				echo ("<a href='http://a.pomf.se/" . $row['url'] . "'>http://a.pomf.se/" . $row['url'] . "</a>");
+				echo ("<a href='http://a.pomf.se/" . $row['url'] . "'>Hosted on pomf.se</a>");
 			} else {
 				echo ("Hosted elsewhere: " . $row['url']);
 			}
@@ -74,5 +77,13 @@
 	<?php endwhile; ?>
   </table>
 
+  
+<?php
+
+echo ("http://" . $_SERVER['HTTP_HOST'] . getwd());
+
+?>
+
+  
 </body>
 </html>
