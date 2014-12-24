@@ -1,4 +1,4 @@
-<?php // ini_set('display_errors',1); error_reporting(E_ALL); // Display errors
+<?php //ini_set('display_errors',1); error_reporting(E_ALL); // Display errors
 if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since the type can be faked */
 || ($_FILES["userfile"]["type"] == "video/mp4")     /* We should try using finfo_open */
 || ($_FILES["userfile"]["type"] == "video/ogg")
@@ -10,6 +10,7 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 	}
     else {
         $addToDb = false;
+		require_once 'libs/avipedia_tripcode.php';
 
         // Create/initialise fields for insertion into table
         $title = trim(htmlentities(strip_tags($_POST["title"]), ENT_QUOTES));
@@ -23,18 +24,10 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
         $uploader_info = explode("#", $_POST["uploader_name"]);
         $uploader_info[0] == "" ? $uploader_name = null : $uploader_name = $uploader_info[0];
         $uploader_name = trim(htmlentities(strip_tags($uploader_name), ENT_QUOTES));
-        $tripcode; // = generate tripcode
+        $tripcode = mktripcode($uploader_info[1]);
 
-        $video_upload_date = date("Y-m-d H:i:s");
+        $upload_date = date("Y-m-d H:i:s");
 		$filename = trim(htmlentities(strip_tags($_FILES["userfile"]["name"]), ENT_QUOTES));
-
-//		if (!array_key_exists(1, $uploader_info)) {
-//			$tripcode = null;
-//		}
-//        else {
-//			// Strongly recommended to replace the string used as salt here
-//			$tripcode = crypt($_POST["trip_pass"], 'ThIsISs@lt.UFR EW(YY!d<AU&|vueG7NP?J*Ns*Ug+JEClm)D!f>KLOzQb?0;?Z$@]h<7{OQ|');
-//		}
 
 		// Display information
 		echo "File name on upload: " . $filename . "<br>";
@@ -44,7 +37,7 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 		echo "Size: " . ($_FILES["userfile"]["size"] / 1024) . " kB<br>";
         echo "Uploader name: " . $uploader_name . "<br>";
 		echo "Temp file: " . $_FILES["userfile"]["tmp_name"] . "<br>";
-		echo "Time video completed upload: " . $video_upload_date . "<br>";
+		echo "Time video completed upload: " . $upload_date . "<br>";
 		echo "Trip code of uploader: " . $tripcode . "<br>";
 
 		if (isset($_POST["uploadtopomf"])) {
@@ -134,9 +127,24 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
             require_once 'dbconnect.php';
             $dbh = dbconnect();
             $sql = 'INSERT INTO videos
-                    (title, description, filetype, url, host_code, uploader_ip, uploader_name, tripcode, upload_date
+                    (title, description, filetype, url, host_code, uploader_ip, uploader_name, tripcode, upload_date)
                     VALUES
-                    ';
+                    (:title, :description, :filetype, :url, :host_code, :uploader_ip, :uploader_name, :tripcode, :upload_date)';
+			$insert = $dbh -> prepare($sql);
+			$insert -> bindParam(':title', $title, PDO::PARAM_STR);
+			$insert -> bindParam(':description', $description, PDO::PARAM_STR);
+			$insert -> bindParam(':filetype', $filetype, PDO::PARAM_STR);
+			$insert -> bindParam(':url', $url, PDO::PARAM_STR);
+			$insert -> bindParam(':host_code', $host_code, PDO::PARAM_INT);
+			$insert -> bindParam(':uploader_ip', $uploader_ip, PDO::PARAM_STR);
+			$insert -> bindParam(':uploader_name', $uploader_name, PDO::PARAM_STR);
+			$insert -> bindParam(':tripcode', $tripcode, PDO::PARAM_STR);
+			$insert -> bindParam(':upload_date', $upload_date, PDO::PARAM_STR);
+
+			if($insert -> execute() === false) {
+				die('Error running insert: ' . implode($insert->errorInfo(), ' '));
+			}
+
             echo "Located at: " . $url;
         }
 	}
@@ -144,4 +152,3 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 else {
 	echo "Invalid file - Exceeds file size limits or bad file type";
 }
-?> 
