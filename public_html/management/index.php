@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>FROST - Management Interface</title>
 	<link rel="stylesheet" type="text/css" href="../styles/master.css">
+	<link rel="stylesheet" type="text/css" href="../styles/management.css">
 </head>
 
 <body>
@@ -62,10 +63,11 @@
 		</td>
 		<td><?php 
 			if ( $row['video_status'] == 1 ) {
-				echo "Unmoderated";
-				echo ("<a href='index.php' class='button' id='uploadBtn'>Approve</a>");
+				echo "Unmoderated ";
+				echo ("<a href='index.php' class='button'>Approve</a><a href='index.php' class='button' id='warnBtn'>Delete</a>");
 			} elseif ( $row['video_status'] == 2 ) {
 				echo "Approved";
+				echo ("<a href='index.php' class='button'>Unapprove</a><a href='index.php' class='button' id='warnBtn'>Delete</a>");
 			} elseif ( $row['video_status'] == 3 ) {
 				echo ("Deleted. Reason: " . $row['removal_code']);
 			} else {

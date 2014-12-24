@@ -22,15 +22,3 @@ a.button:link, a.button:visited, input[type=submit] {
 a.button:hover, a.button:active, input[type=submit]:hover, input[type=submit]:active {
     background-color: #85C2FF;
 }
-
-/* Preliminary table CSS */
-table tr:nth-child(even) {
-    background-color: #eee;
-}
-table tr:nth-child(odd) {
-   background-color:#fff;
-}
-table th	{
-    background-color: black;
-    color: white;
-}
