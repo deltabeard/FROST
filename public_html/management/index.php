@@ -76,14 +76,6 @@
 	</tr>
 	<?php endwhile; ?>
   </table>
-
-  
-<?php
-
-echo ("http://" . $_SERVER['HTTP_HOST'] . getwd());
-
-?>
-
   
 </body>
 </html>
