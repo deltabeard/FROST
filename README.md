@@ -21,12 +21,6 @@ post_max_size=50M
 upload_max_filesize=50M
 ```
 
-* Change the salt used in public_html/upload_file.php before uploading to a server.
-```
-// Strongly recommended to replace the string used as salt here
-$trip = crypt($_POST["trip_pass"], 'Change This String!');
-```
-
 * Change the database credentials in public_html/dbconnect.php
 ```
 return new PDO('mysql:host=localhost; dbname=FROST', 'jamie', 'password');
