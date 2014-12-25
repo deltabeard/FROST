@@ -20,11 +20,11 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
         $host_code;
         $uploader_ip = $_SERVER["REMOTE_ADDR"];
 
-        // Seperate uploader_name and tripcode and legalise the characters.
+        // Separate uploader_name and tripcode and legalise the characters.
         $uploader_info = explode("#", $_POST["uploader_name"]);
         $uploader_info[0] == "" ? $uploader_name = null : $uploader_name = $uploader_info[0];
         $uploader_name = trim(htmlentities(strip_tags($uploader_name), ENT_QUOTES));
-        $tripcode = mktripcode($uploader_info[1]);
+        $uploader_info[1] == null ? $tripcode = null : $tripcode = mktripcode($uploader_info[1]);
 
         $upload_date = date("Y-m-d H:i:s");
 		$filename = trim(htmlentities(strip_tags($_FILES["userfile"]["name"]), ENT_QUOTES));

@@ -50,7 +50,7 @@
 		<td><?php echo $row['filetype']; ?></td>
 		<td><?php echo $row['upload_date']; ?></td>
 		<td><?php echo $row['uploader_ip']; ?></td>
-		<td><?php echo ($row['uploader_name'] . "!" . $row['tripcode']); ?></td>
+		<td><?php echo (($row['uploader_name'] == null ? "<i>Anonymous</i>" : $row['uploader_name']) . ($row['tripcode'] == null ? "" : ("!" . $row['tripcode']))); ?></td>
 		<td><?php
 			if ( $row['host_code'] == 1 ) {
 				echo ("<a href='" . $cwd . $row['url'] . "'>Hosted locally</a>");
