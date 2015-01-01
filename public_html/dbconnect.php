@@ -9,8 +9,11 @@
             die('Cannot connect to database: ' . $e -> getMessage());
         }
     }
-	function getwd() {
-		// Return the location of this directory
+
+/**
+ * @return string location of the directory that this file is stored in.
+ */
+function getwd() {
 		return (str_replace($_SERVER["DOCUMENT_ROOT"],'', str_replace('\\','/',__DIR__ ) ));
 	}
 ?>
