@@ -57,7 +57,8 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
         <option value="asc">Ascending</option>
         <option value="desc">Descending</option>
     </select>
-    <input type="checkbox" name="show_all_vid" value="True">Show All Videos
+    <input type="checkbox" id="show_all_vid" name="show_all_vid" value="True">
+    <label for="show_all_vid">Show All Videos</label>
     <input type="submit">
 </form>
 
