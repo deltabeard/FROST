@@ -36,10 +36,13 @@
                     <td><input type="file" name="userfile" data-max-size="50MiB"></td>
                 </tr>
             </table>
-
+            <br>
+            <?php
+            echo file_get_contents( "upload_license.txt" );
+            ?>
+            <br>
             <input type="submit" value="Send File">
         </form>
     </div>
-
 </body>
 </html>
