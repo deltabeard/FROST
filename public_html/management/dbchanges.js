@@ -15,7 +15,7 @@ function approveVid(id, vidstatus, rmcode) {
                 document.getElementById(id + "status").innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("POST", "dbchanges.php?approveid=" + id + "&vidstatus=" + vidstatus + "&rmcode=" + rmcode, true);
+        xmlhttp.open("POST", "dbchanges.php?id=" + id + "&vidstatus=" + vidstatus + "&rmcode=" + rmcode, true);
         xmlhttp.send();
     }
 }
