@@ -100,10 +100,10 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
             <td><?php
                 if ($row['video_status'] == 1) {
                     echo "Unmoderated ";
-                    echo("<a href='#' onclick='approveVid($id, 2);return false;' class='button'>Approve</a><a  href='#' onclick='approveVid($id, 3);return false;' class='button' id='warnBtn'>Delete</a>");
+                    echo("<a href='#' onclick='approveVid($id, 2, null);return false;' class='button'>Approve</a><a  href='#' onclick='approveVid($id, 3, 1);return false;' class='button' id='warnBtn'>Delete</a>");
                 } elseif ($row['video_status'] == 2) {
                     echo "Approved";
-                    echo("<a href='#' onclick='approveVid($id, 1);return false;' class='button'>Unapprove</a><a  href='#' onclick='approveVid($id, 3);return false;' class='button' id='warnBtn'>Delete</a>");
+                    echo("<a href='#' onclick='approveVid($id, 1, null);return false;' class='button'>Unapprove</a><a  href='#' onclick='approveVid($id, 3, 1);return false;' class='button' id='warnBtn'>Delete</a>");
                 } elseif ($row['video_status'] == 3) {
                     echo("Deleted. Reason: " . $row['removal_code']);
                 } else {
@@ -118,7 +118,7 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
     ?>
 </table>
 
-<div id="txtHint"><b>Person info will be listed here...</b></div>
+<div id="dbgText"><b>Debug information will appear here...</b></div>
 
 </body>
 </html>

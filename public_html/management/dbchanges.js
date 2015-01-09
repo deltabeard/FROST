@@ -1,5 +1,5 @@
 
-function approveVid(id, vidstatus) {
+function approveVid(id, vidstatus, rmcode) {
     if (id == "") {
         document.getElementById("txtHint").innerHTML = "";
         return;
@@ -13,10 +13,10 @@ function approveVid(id, vidstatus) {
         }
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+                document.getElementById("dbgText").innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("POST","dbchanges.php?approveid="+id+"&vidstatus="+vidstatus,true);
+        xmlhttp.open("POST","dbchanges.php?approveid="+id+"&vidstatus="+vidstatus+"&rmcode="+rmcode,true);
         xmlhttp.send();
     }
 }

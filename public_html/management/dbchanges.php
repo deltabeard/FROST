@@ -6,11 +6,12 @@
 
 $approveid = $_REQUEST["approveid"];
 $vidstatus = $_REQUEST["vidstatus"];
+$rmcode = $_REQUEST["rmcode"];
 
 $output = "";
 
 if(isset($approveid)){
-    echo $approveid;
+    echo "ID: " . $approveid . ", Status: " . $vidstatus;
 }
 
 // Connect to database
@@ -24,7 +25,7 @@ if($vidstatus == 3){
     $query = $dbh->prepare(
         $sql_command
     );
-    $results = $query->execute(array('vidstatus' => $vidstatus, 'rmcode' => '1', 'id' => $approveid));
+    $results = $query->execute(array('vidstatus' => $vidstatus, 'rmcode' => $rmcode, 'id' => $approveid));
 } else {
     $query = $dbh->prepare(
         $sql_command
