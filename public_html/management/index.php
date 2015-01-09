@@ -121,7 +121,5 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
     ?>
 </table>
 
-<div id="dbgText"><b>Debug information will appear here...</b></div>
-
 </body>
 </html>
