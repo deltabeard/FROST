@@ -5,6 +5,7 @@
     <title>FROST - Management Interface</title>
     <link rel="stylesheet" type="text/css" href="../styles/master.css">
     <link rel="stylesheet" type="text/css" href="../styles/management.css">
+    <script src="dbchanges.js"></script>
 </head>
 
 <body>
@@ -76,7 +77,10 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
     </tr>
     <?php while ($row = $query->fetch()) : ?>
         <tr>
-            <td><?php echo $row['id']; ?></td>
+            <td><?php
+                $id = $row['id'];
+                echo $id;
+                ?></td>
             <td><?php echo $row['title']; ?></td>
             <td><?php echo (NULL == $row['description']) ? "<i>NULL</i>" : $row['description']; ?></td>
             <td><?php echo $row['filetype']; ?></td>
@@ -96,10 +100,10 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
             <td><?php
                 if ($row['video_status'] == 1) {
                     echo "Unmoderated ";
-                    echo("<a href='index.php' class='button'>Approve</a><a href='index.php' class='button' id='warnBtn'>Delete</a>");
+                    echo("<a href='#' onclick='approveVid($id, 2);return false;' class='button'>Approve</a><a  href='#' onclick='approveVid($id, 3);return false;' class='button' id='warnBtn'>Delete</a>");
                 } elseif ($row['video_status'] == 2) {
                     echo "Approved";
-                    echo("<a href='index.php' class='button'>Unapprove</a><a href='index.php' class='button' id='warnBtn'>Delete</a>");
+                    echo("<a href='#' onclick='approveVid($id, 1);return false;' class='button'>Unapprove</a><a  href='#' onclick='approveVid($id, 3);return false;' class='button' id='warnBtn'>Delete</a>");
                 } elseif ($row['video_status'] == 3) {
                     echo("Deleted. Reason: " . $row['removal_code']);
                 } else {
@@ -108,8 +112,13 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                 ?>
             </td>
         </tr>
-    <?php endwhile; ?>
+    <?php endwhile;
+    // Closing connection to database
+    $dbh = null;
+    ?>
 </table>
+
+<div id="txtHint"><b>Person info will be listed here...</b></div>
 
 </body>
 </html>
