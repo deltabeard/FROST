@@ -101,7 +101,7 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                 <?php
                 echo "<div id='" . $id . "status'>";
                 if ($row['video_status'] == 1) {
-                    echo("Unmoderated <a href='#' onclick='approveVid($id, 2, null);return false;' class='button'>Approve</a><a  href='#' onclick='approveVid($id, 3, 1);return false;' class='button' id='warnBtn'>Delete</a>");
+                    echo("Unmoderated <a href='#' onclick='approveVid($id, 2, null);return false;' class='button'>Approve</a><a  href='#' onclick='showRmvOpt($id);return false;' class='button'>Delete</a>");
                 } elseif ($row['video_status'] == 2) {
                     echo("Approved <a href='#' onclick='approveVid($id, 1, null);return false;' class='button'>Unapprove</a><a  href='#' onclick='approveVid($id, 3, 1);return false;' class='button' id='warnBtn'>Delete</a>");
                 } elseif ($row['video_status'] == 3) {
@@ -110,6 +110,15 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                     echo("Error: video_status of " . $row['video_status'] . " is unacceptable");
                 }
                 ?>
+                <form action="#" onsubmit="approveVid(<?php echo $id; ?>, 3, rmvCode.value);return false;" id='<?php echo $id . "statusDel"; ?>' style="display: none">
+                    Select removal code:
+                    <select id="rmvCode">
+                        <option value="1">Copyright violation</option>
+                        <option value="2">Adult content is currently prohibited</option>
+                        <option value="3">Content is against the law where server is located</option>
+                    </select>
+                    <input type="submit" id="warnBtn" value="Confirm Delete" />
+                </form>
                 </div>
             </td>
         </tr>

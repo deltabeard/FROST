@@ -19,3 +19,8 @@ function approveVid(id, vidstatus, rmcode) {
         xmlhttp.send();
     }
 }
+
+function showRmvOpt(id) {
+    // Display drop-down list
+    document.getElementById(id + "statusDel").style.display = 'block';
+}
