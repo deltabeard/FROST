@@ -8,12 +8,6 @@ $approveid = $_REQUEST["approveid"];
 $vidstatus = $_REQUEST["vidstatus"];
 $rmcode = $_REQUEST["rmcode"];
 
-$output = "";
-
-if(isset($approveid)){
-    echo "ID: " . $approveid . ", Status: " . $vidstatus;
-}
-
 // Connect to database
 require_once '../dbconnect.php';
 $dbh = dbconnect();
@@ -26,11 +20,13 @@ if($vidstatus == 3){
         $sql_command
     );
     $results = $query->execute(array('vidstatus' => $vidstatus, 'rmcode' => $rmcode, 'id' => $approveid));
+    echo "Video deleted";
 } else {
     $query = $dbh->prepare(
         $sql_command
     );
 
     $results = $query->execute(array('vidstatus' => $vidstatus, 'id' => $approveid));
+    echo "Video status changed";
 }
 

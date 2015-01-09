@@ -13,7 +13,7 @@ function approveVid(id, vidstatus, rmcode) {
         }
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("dbgText").innerHTML = xmlhttp.responseText;
+                document.getElementById(id + "status").innerHTML = xmlhttp.responseText;
             }
         }
         xmlhttp.open("POST","dbchanges.php?approveid="+id+"&vidstatus="+vidstatus+"&rmcode="+rmcode,true);

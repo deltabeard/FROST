@@ -97,7 +97,9 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                 }
                 ?>
             </td>
-            <td><?php
+            <td>
+                <?php
+                echo "<div id='" . $id . "status'>";
                 if ($row['video_status'] == 1) {
                     echo "Unmoderated ";
                     echo("<a href='#' onclick='approveVid($id, 2, null);return false;' class='button'>Approve</a><a  href='#' onclick='approveVid($id, 3, 1);return false;' class='button' id='warnBtn'>Delete</a>");
@@ -110,6 +112,7 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                     echo("Error: video_status of " . $row['video_status'] . " is unacceptable");
                 }
                 ?>
+                </div>
             </td>
         </tr>
     <?php endwhile;
