@@ -101,11 +101,9 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                 <?php
                 echo "<div id='" . $id . "status'>";
                 if ($row['video_status'] == 1) {
-                    echo "Unmoderated ";
-                    echo("<a href='#' onclick='approveVid($id, 2, null);return false;' class='button'>Approve</a><a  href='#' onclick='approveVid($id, 3, 1);return false;' class='button' id='warnBtn'>Delete</a>");
+                    echo("Unmoderated <a href='#' onclick='approveVid($id, 2, null);return false;' class='button'>Approve</a><a  href='#' onclick='approveVid($id, 3, 1);return false;' class='button' id='warnBtn'>Delete</a>");
                 } elseif ($row['video_status'] == 2) {
-                    echo "Approved";
-                    echo("<a href='#' onclick='approveVid($id, 1, null);return false;' class='button'>Unapprove</a><a  href='#' onclick='approveVid($id, 3, 1);return false;' class='button' id='warnBtn'>Delete</a>");
+                    echo("Approved <a href='#' onclick='approveVid($id, 1, null);return false;' class='button'>Unapprove</a><a  href='#' onclick='approveVid($id, 3, 1);return false;' class='button' id='warnBtn'>Delete</a>");
                 } elseif ($row['video_status'] == 3) {
                     echo("Deleted. Reason: " . $row['removal_code']);
                 } else {
