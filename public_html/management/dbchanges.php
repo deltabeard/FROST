@@ -12,10 +12,10 @@ $rmcode = $_REQUEST["rmcode"];
 require_once '../dbconnect.php';
 $dbh = dbconnect();
 
-$sql_command =  "UPDATE videos SET video_status = :vidstatus WHERE id = :id ;";
+$sql_command = "UPDATE videos SET video_status = :vidstatus WHERE id = :id ;";
 
-if($vidstatus == 3){
-    $sql_command =  "UPDATE videos SET video_status = :vidstatus, removal_code = :rmcode WHERE id = :id ;";
+if ($vidstatus == 3) {
+    $sql_command = "UPDATE videos SET video_status = :vidstatus, removal_code = :rmcode WHERE id = :id ;";
     $query = $dbh->prepare(
         $sql_command
     );
