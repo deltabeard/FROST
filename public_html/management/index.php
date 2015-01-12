@@ -18,6 +18,7 @@ This is the FROST Management Interface.<br>
 <?php
 //Including php files
 require_once '../getwd.php';
+require_once '../libs/delete_button.php';
 // Connect to database
 require_once '../libs/dbconnect.php';
 $dbh = dbconnect();
@@ -108,10 +109,10 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                 echo "<div id='" . $id . "status'>";
                 if ($row['video_status'] == 1) {
                     echo("Unmoderated <a href='#' onclick='approveVid(" . $id . ", 2, null, null, null);return false;' class='button'>Approve</a>");
-                    print_delete_button($id);
+                    echo print_delete_button($id);
                 } elseif ($row['video_status'] == 2) {
                     echo("Approved <a href='#' onclick='approveVid(" . $id . ", 1, null, null, null);return false;' class='button'>Unapprove</a>");
-                    print_delete_button($id);
+                    echo print_delete_button($id);
                 } elseif ($row['video_status'] == 3) {
                     echo("Deleted. Reason: " . $row['removal_code']);
                 } else {
@@ -136,14 +137,6 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
     <?php endwhile;
     // Closing connection to database
     $dbh = null;
-
-    //Functions
-    function print_delete_button($id){
-        // Print delete button
-        echo "<a id='" . $id . "_delete_button" . "' href='#' onclick='showRmvOpt(" . $id . ");return false;' class='button'>Delete</a>";
-    }
-
-
     ?>
 </table>
 

@@ -15,6 +15,9 @@ function approveVid(id, vidstatus, rmcode, host_code, file_location) {
                 document.getElementById(id + "status").innerHTML = xmlhttp.responseText;
             }
         }
+        if (vidstatus == 3){
+            document.getElementById(id + "_delete_form").style.display = 'none';
+        }
         xmlhttp.open("POST", "dbchanges.php?id=" + id + "&vidstatus=" + vidstatus + "&rmcode=" + rmcode + "&host_code=" + host_code + "&file_location=" + file_location, true);
         xmlhttp.send();
     }
