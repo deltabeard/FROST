@@ -133,7 +133,6 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                 </form>
             </td>
         </tr>
-       ;
     <?php endwhile;
     // Closing connection to database
     $dbh = null;
