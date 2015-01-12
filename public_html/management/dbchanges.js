@@ -24,7 +24,14 @@ function approveVid(id, vidstatus, rmcode, host_code, file_location) {
 }
 
 function showRmvOpt(id) {
+    // Used by /libs/delete_button.php
     // Display drop-down list
     document.getElementById(id + "_delete_form").style.display = 'block';
     document.getElementById(id + "_delete_button").style.display = 'none';
+}
+
+function cancel_delete(id) {
+    // Display drop-down list
+    document.getElementById(id + "_delete_form").style.display = 'none';
+    document.getElementById(id + "_delete_button").style.display = 'inline';
 }

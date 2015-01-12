@@ -14,7 +14,6 @@ include 'banner-mgmt.html';
 ?>
 This is the FROST Management Interface.<br>
 
-
 <?php
 //Including php files
 require_once '../getwd.php';
@@ -130,6 +129,7 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                         <!-- Can add more options here. Remember to change dbchanges.php also. -->
                     </select>
                     <input type="submit" id="warnBtn" value="Confirm Delete" />
+                    <a href='#' onclick='cancel_delete(<?php echo $id; ?>);return false;' class='button'>Cancel</a>
                 </form>
             </td>
         </tr>
