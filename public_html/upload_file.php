@@ -16,7 +16,7 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
         $title = trim(htmlentities(strip_tags($_POST["title"]), ENT_QUOTES));
         $description = trim(htmlentities(strip_tags($_POST["description"]), ENT_QUOTES));
         $filetype = substr($_FILES["userfile"]["type"], 6);
-        $url;
+        $filename;
         $host_code;
         $uploader_ip = $_SERVER["REMOTE_ADDR"];
 
@@ -90,7 +90,7 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 
             // Execute the upload and decode the url it was stored at
             $jsonArray = json_decode(curl_exec($request), true);
-            $url = $jsonArray['files'][0]['url'];
+            $filename = $jsonArray['files'][0]['url'];
 
 			// close the session
 			curl_close($request);
@@ -107,17 +107,16 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 
 		}
         else {
-			if (file_exists("upload/$filename")) {
+			if (file_exists("upload" . DIRECTORY_SEPARATOR . $filename)) {
 				echo $filename . " already exists. ";
 			}
             else {
 				// If requirements of the file are met, move the file from temp to permanent location
 				move_uploaded_file($_FILES["userfile"]["tmp_name"],
-				"upload/$filename");
-				echo "Stored in: " . "upload/$filename";
+					("upload" . DIRECTORY_SEPARATOR . "$filename"));
+				echo "Stored in: " . "upload" . DIRECTORY_SEPARATOR . "$filename";
 			}
             $addToDb = true;
-            $url = "upload/$filename";
             $host_code = 1;
 			// Display video
 			echo "<br><video controls><source src='upload/" . $filename . "' type='" . $_FILES["userfile"]["type"] . "'>Your browser does not support the video tag.</video>";
@@ -134,7 +133,7 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 			$insert -> bindParam(':title', $title, PDO::PARAM_STR);
 			$insert -> bindParam(':description', $description, PDO::PARAM_STR);
 			$insert -> bindParam(':filetype', $filetype, PDO::PARAM_STR);
-			$insert -> bindParam(':url', $url, PDO::PARAM_STR);
+			$insert -> bindParam(':url', $filename, PDO::PARAM_STR);
 			$insert -> bindParam(':host_code', $host_code, PDO::PARAM_INT);
 			$insert -> bindParam(':uploader_ip', $uploader_ip, PDO::PARAM_STR);
 			$insert -> bindParam(':uploader_name', $uploader_name, PDO::PARAM_STR);
@@ -145,7 +144,7 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 				die('Error running insert: ' . implode($insert->errorInfo(), ' '));
 			}
 
-            echo "Located at: " . $url;
+            echo "Located at: " . $filename;
         }
 	}
 }

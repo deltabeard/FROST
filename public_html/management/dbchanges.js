@@ -1,4 +1,4 @@
-function approveVid(id, vidstatus, rmcode) {
+function approveVid(id, vidstatus, rmcode, host_code, file_location) {
     if (id == "") {
         document.getElementById("txtHint").innerHTML = "";
         return;
@@ -15,7 +15,7 @@ function approveVid(id, vidstatus, rmcode) {
                 document.getElementById(id + "status").innerHTML = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("POST", "dbchanges.php?id=" + id + "&vidstatus=" + vidstatus + "&rmcode=" + rmcode, true);
+        xmlhttp.open("POST", "dbchanges.php?id=" + id + "&vidstatus=" + vidstatus + "&rmcode=" + rmcode + "&host_code=" + host_code + "&file_location=" + file_location, true);
         xmlhttp.send();
     }
 }

@@ -88,12 +88,16 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
             <td><?php echo $row['uploader_ip']; ?></td>
             <td><?php echo(($row['uploader_name'] == null ? "<i>Anonymous</i>" : $row['uploader_name']) . ($row['tripcode'] == null ? "" : ("!" . $row['tripcode']))); ?></td>
             <td><?php
-                if ($row['host_code'] == 1) {
-                    echo("<a href='" . $cwd . $row['url'] . "'>Hosted locally</a>");
-                } elseif ($row['host_code'] == 2) {
-                    echo("<a href='http://a.pomf.se/" . $row['url'] . "'>Hosted on pomf.se</a>");
+                $current_host_code = $row['host_code'];
+                if ($current_host_code == 1) {
+                    $current_file_location = $cwd . $row['url'];
+                    echo("<a href='" . $current_file_location . "'>Hosted locally</a>");
+                } elseif ($current_host_code == 2) {
+                    $current_file_location = $row['url'];
+                    echo("<a href='http://a.pomf.se/" . $current_file_location . "'>Hosted on pomf.se</a>");
                 } else {
-                    echo("Hosted elsewhere: " . $row['url']);
+                    $current_file_location = $row['url'];
+                    echo("Hosted elsewhere: " . $current_file_location);
                 }
                 ?>
             </td>
@@ -101,16 +105,16 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                 <?php
                 echo "<div id='" . $id . "status'>";
                 if ($row['video_status'] == 1) {
-                    echo("Unmoderated <a href='#' onclick='approveVid($id, 2, null);return false;' class='button'>Approve</a><a  href='#' onclick='showRmvOpt($id);return false;' class='button'>Delete</a>");
+                    echo("Unmoderated <a href='#' onclick='approveVid($id, 2, null, null, null);return false;' class='button'>Approve</a><a  href='#' onclick='showRmvOpt($id);return false;' class='button'>Delete</a>");
                 } elseif ($row['video_status'] == 2) {
-                    echo("Approved <a href='#' onclick='approveVid($id, 1, null);return false;' class='button'>Unapprove</a><a  href='#' onclick='showRmvOpt($id);return false;' class='button'>Delete</a>");
+                    echo("Approved <a href='#' onclick='approveVid($id, 1, null, null, null);return false;' class='button'>Unapprove</a><a  href='#' onclick='showRmvOpt($id);return false;' class='button'>Delete</a>");
                 } elseif ($row['video_status'] == 3) {
                     echo("Deleted. Reason: " . $row['removal_code']);
                 } else {
                     echo("Error: video_status of " . $row['video_status'] . " is unacceptable");
                 }
                 ?>
-                <form action="#" onsubmit="approveVid(<?php echo $id; ?>, 3, rmvCode.value);return false;" id='<?php echo $id . "statusDel"; ?>' style="display: none">
+                <form action="#" onsubmit="approveVid(<?php echo $id; ?>, 3, rmvCode.value, <?php echo $current_host_code; ?>, <?php echo "'" . $current_file_location . "'"; ?>);return false;" id='<?php echo $id . "statusDel"; ?>' style="display: none">
                     Select removal code:
                     <select id="rmvCode">
                         <option value="1">Copyright violation</option>
