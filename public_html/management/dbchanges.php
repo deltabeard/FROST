@@ -1,6 +1,6 @@
 <?php
 /**
- * Called by index.php using AJAX to make changes to the database,
+ * Called by management/index.php using AJAX to make changes to the database,
  * such as approving a video.
  */
 
