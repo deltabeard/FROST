@@ -116,6 +116,7 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                         <option value="1">Copyright violation</option>
                         <option value="2">Adult content is currently prohibited</option>
                         <option value="3">Content is against the law where server is located</option>
+                        <!-- Can add more options here. Remember to change dbchanges.php also. -->
                     </select>
                     <input type="submit" id="warnBtn" value="Confirm Delete" />
                 </form>
