@@ -11,7 +11,7 @@ $host_code = $_REQUEST["host_code"];
 $file_location = $_REQUEST["file_location"];
 
 // Connect to database
-require_once '../dbconnect.php';
+require_once '../libs/dbconnect.php';
 $dbh = dbconnect();
 
 $sql_command = "UPDATE videos SET video_status = :vidstatus WHERE id = :id ;";
@@ -46,12 +46,13 @@ if ($vidstatus == 3) {
         $sql_command
     );
     $results = $query->execute(array('vidstatus' => $vidstatus, 'id' => $id));
-    echo("Approved <a href='#' onclick='approveVid($id, 1, null, null, null);return false;' class='button'>Unapprove</a><a  href='#' onclick='approveVid($id, 3, 1, null, null);return false;' class='button' id='warnBtn'>Delete</a>");
+    // User must refresh the page for the delete button to appear.
+    echo("Approved <a href='#' onclick='approveVid($id, 1, null, null, null);return false;' class='button'>Unapprove</a>");
 } elseif ($vidstatus == 1) {
     $query = $dbh->prepare(
         $sql_command
     );
     $results = $query->execute(array('vidstatus' => $vidstatus, 'id' => $id));
-    echo("Unmoderated <a href='#' onclick='approveVid($id, 2, null, null, null);return false;' class='button'>Approve</a><a  href='#' onclick='approveVid($id, 3, 1, null, null);return false;' class='button' id='warnBtn'>Delete</a>");
+    echo("Unmoderated <a href='#' onclick='approveVid($id, 2, null, null, null);return false;' class='button'>Approve</a>");
 }
 

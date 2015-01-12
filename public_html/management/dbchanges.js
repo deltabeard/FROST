@@ -22,5 +22,6 @@ function approveVid(id, vidstatus, rmcode, host_code, file_location) {
 
 function showRmvOpt(id) {
     // Display drop-down list
-    document.getElementById(id + "statusDel").style.display = 'block';
+    document.getElementById(id + "_delete_form").style.display = 'block';
+    document.getElementById(id + "_delete_button").style.display = 'none';
 }

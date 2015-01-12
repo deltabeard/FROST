@@ -123,7 +123,7 @@ if ((($_FILES["userfile"]["type"] == "video/webm")  /* <-- This is naive since t
 		}
         if($addToDb) {
             // Connect to database and insert new video
-            require_once 'dbconnect.php';
+            require_once 'libs/dbconnect.php';
             $dbh = dbconnect();
             $sql = 'INSERT INTO videos
                     (title, description, filetype, url, host_code, uploader_ip, uploader_name, tripcode, upload_date)
