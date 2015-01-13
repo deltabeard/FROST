@@ -11,6 +11,34 @@
 <body>
 <?php
 include 'banner-mgmt.html';
+
+session_start();
+$secret_username = "mahyar";
+$secret_password = "password";
+if (isset($_POST['username']) || isset($_POST['password'])) {
+    if ($_POST['username'] == $secret_username && $_POST['password'] == $secret_password) {
+        $_SESSION['username'] = $secret_username;
+        echo "Login successful.<br>";
+    } else {
+        echo 'Login error: Username or password incorrect.<br>';
+        show_login_form();
+        return;
+    }
+} else {
+    show_login_form();
+    return;
+}
+
+function show_login_form()
+{
+    echo 'Login: <br>';
+    echo '<form action="index.php" method="POST">
+        Username <input type="text" name="username" /><br>
+        Password <input type="password" name="password" />
+        <input type="submit" name="Login" value="Login">
+        </form>';
+}
+
 ?>
 This is the FROST Management Interface.<br>
 

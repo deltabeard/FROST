@@ -4,6 +4,15 @@
  * such as approving a video.
  */
 
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    // Page is protected, only logged in people can access this page.
+    // Well worded and descriptive error message below to let user know to log in.
+    echo "Get out bruv.";
+    return;
+}
+
 $id = $_REQUEST["id"];
 $vidstatus = $_REQUEST["vidstatus"];
 $rmcode = $_REQUEST["rmcode"];
