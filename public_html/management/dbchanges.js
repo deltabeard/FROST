@@ -31,7 +31,7 @@ function showRmvOpt(id) {
 }
 
 function cancel_delete(id) {
-    // Display drop-down list
+    // Hide drop-down list, and display delete button
     document.getElementById(id + "_delete_form").style.display = 'none';
     document.getElementById(id + "_delete_button").style.display = 'inline';
 }

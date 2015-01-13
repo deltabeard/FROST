@@ -47,12 +47,12 @@ if ($vidstatus == 3) {
     );
     $results = $query->execute(array('vidstatus' => $vidstatus, 'id' => $id));
     // User must refresh the page for the delete button to appear.
-    echo("Approved <a href='#' onclick='approveVid($id, 1, null, null, null);return false;' class='button'>Unapprove</a>");
+    echo("Approved <a href='#' onclick='approveVid(". $id . ", 1, null, null, null);return false;' class='button'>Unapprove</a>");
 } elseif ($vidstatus == 1) {
     $query = $dbh->prepare(
         $sql_command
     );
     $results = $query->execute(array('vidstatus' => $vidstatus, 'id' => $id));
-    echo("Unmoderated <a href='#' onclick='approveVid($id, 2, null, null, null);return false;' class='button'>Approve</a>");
+    echo("Unmoderated <a href='#' onclick='approveVid(" . $id . ", 2, null, null, null);return false;' class='button'>Approve</a>");
 }
 
