@@ -12,11 +12,11 @@ function approveVid(id, vidstatus, rmcode, host_code, file_location) {
         }
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById(id + "status").innerHTML = xmlhttp.responseText;
+                document.getElementById("status" + id).innerHTML = xmlhttp.responseText;
             }
         }
         if (vidstatus == 3){
-            document.getElementById(id + "_delete_form").style.display = 'none';
+            document.getElementById("delete_form_" + id).style.display = 'none';
         }
         xmlhttp.open("POST", "dbchanges.php?id=" + id + "&vidstatus=" + vidstatus + "&rmcode=" + rmcode + "&host_code=" + host_code + "&file_location=" + file_location, true);
         xmlhttp.send();
@@ -26,12 +26,12 @@ function approveVid(id, vidstatus, rmcode, host_code, file_location) {
 function showRmvOpt(id) {
     // Used by /libs/delete_button.php
     // Display drop-down list
-    document.getElementById(id + "_delete_form").style.display = 'block';
-    document.getElementById(id + "_delete_button").style.display = 'none';
+    document.getElementById("delete_form_" + id).style.display = 'block';
+    document.getElementById("delete_button_" + id).style.display = 'none';
 }
 
 function cancel_delete(id) {
     // Hide drop-down list, and display delete button
-    document.getElementById(id + "_delete_form").style.display = 'none';
-    document.getElementById(id + "_delete_button").style.display = 'inline';
+    document.getElementById("delete_form_" + id).style.display = 'none';
+    document.getElementById("delete_button_" + id).style.display = 'inline';
 }

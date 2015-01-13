@@ -105,7 +105,7 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
             </td>
             <td>
                 <?php
-                echo "<div id='" . $id . "status'>";
+                echo "<div id='status" . $id . "'>";
                 if ($row['video_status'] == 1) {
                     echo("Unmoderated <a href='#' onclick='approveVid(" . $id . ", 2, null, null, null);return false;' class='button'>Approve</a>");
                     echo print_delete_button($id);
@@ -120,7 +120,7 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                 ?>
                 </div>
 
-                <form id='<?php echo $id . "_delete_form"; ?>' action="#" onsubmit="approveVid(<?php echo $id; ?>, 3, rmvCode.value, <?php echo $current_host_code; ?>, <?php echo "'" . $current_file_location . "'"; ?>);return false;" style="display: none">
+                <form id='<?php echo "delete_form_" . $id; ?>' action="#" onsubmit="approveVid(<?php echo $id; ?>, 3, rmvCode.value, <?php echo $current_host_code; ?>, <?php echo "'" . $current_file_location . "'"; ?>);return false;" style="display: none">
                     Select removal code:
                     <select id="rmvCode">
                         <option value="1">Copyright violation</option>

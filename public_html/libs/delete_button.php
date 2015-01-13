@@ -5,5 +5,5 @@
  */
 function print_delete_button($id){
     // Print delete button
-    return "<a id='" . $id . "_delete_button" . "' href='#' onclick='showRmvOpt(" . $id . ");return false;' class='button'>Delete</a>";
+    return "<a id='delete_button_" . $id . "' href='#' onclick='showRmvOpt(" . $id . ");return false;' class='button'>Delete</a>";
 }
