@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +15,6 @@
 <?php
 include 'banner-mgmt.html';
 
-session_start();
 $secret_username = "mahyar";
 $secret_password = "password";
 if (isset($_POST['username']) || isset($_POST['password'])) {
@@ -148,7 +150,9 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                 ?>
                 </div>
 
-                <form id='<?php echo "delete_form_" . $id; ?>' action="#" onsubmit="approveVid(<?php echo $id; ?>, 3, rmvCode.value, <?php echo $current_host_code; ?>, <?php echo "'" . $current_file_location . "'"; ?>);return false;" style="display: none">
+                <form id='<?php echo "delete_form_" . $id; ?>' action="#"
+                      onsubmit="approveVid(<?php echo $id; ?>, 3, rmvCode.value, <?php echo $current_host_code; ?>, <?php echo "'" . $current_file_location . "'"; ?>);return false;"
+                      style="display: none">
                     Select removal code:
                     <select id="rmvCode">
                         <option value="1">Copyright violation</option>
@@ -156,7 +160,7 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
                         <option value="3">Content is against the law where server is located</option>
                         <!-- Can add more options here. Remember to change dbchanges.php also. -->
                     </select>
-                    <input type="submit" id="warnBtn" value="Confirm Delete" />
+                    <input type="submit" id="warnBtn" value="Confirm Delete"/>
                     <a href='#' onclick='cancel_delete(<?php echo $id; ?>);return false;' class='button'>Cancel</a>
                 </form>
             </td>
