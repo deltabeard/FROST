@@ -15,6 +15,8 @@ session_start();
 <?php
 include 'banner-mgmt.html';
 
+echo '<div class="main">';
+
 // This will be replaced with a database. Until then, only one login will be available.
 $secret_username = "mahyar";
 $secret_password = "password";
@@ -172,6 +174,8 @@ $cwd = ("http://" . $_SERVER['HTTP_HOST'] . getwd() . "/");
     $dbh = null;
     ?>
 </table>
+
+</div>
 
 </body>
 </html>
