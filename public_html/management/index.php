@@ -15,21 +15,23 @@ session_start();
 <?php
 include 'banner-mgmt.html';
 
+// This will be replaced with a database. Until then, only one login will be available.
 $secret_username = "mahyar";
 $secret_password = "password";
 if (isset($_POST['username']) || isset($_POST['password'])) {
     if ($_POST['username'] == $secret_username && $_POST['password'] == $secret_password) {
         $_SESSION['username'] = $secret_username;
         echo "Login successful.<br>";
-    } else {
-        echo 'Login error: Username or password incorrect.<br>';
-        show_login_form();
-        return;
     }
-} else {
+}
+
+if (!isset($_SESSION['username'])) {
+    // Page is protected, only logged in people can access this page.
+    // Well worded and descriptive error message below to let user know to log in.
     show_login_form();
     return;
 }
+
 
 function show_login_form()
 {
