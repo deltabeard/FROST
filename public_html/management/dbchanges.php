@@ -63,6 +63,7 @@ if ($vidstatus == 3) {
     );
     $results = $query->execute(array('vidstatus' => $vidstatus, 'id' => $id));
     echo("Unmoderated <a href='#' onclick='approveVid(" . $id . ", 2, null, null, null);return false;' class='button'>Approve</a>");
+    // The following CSS does not work
     // Unhide delete button
     echo('<style type="text/css">
         #delete_button_' . $id . ' {
